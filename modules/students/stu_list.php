@@ -1,16 +1,13 @@
 <?php 
 
-include_once '../../database/database.php'; 
+include ('../../database/database.php'); 
 
 
 $sql = "SELECT * FROM student_info";
 $sql = $conn -> prepare($sql);
 $sql -> execute();
-$result = $conn->get_result();
+$result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-$row = $result -> fetch_assoc();
-print_r($row);
- 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,12 +19,11 @@ print_r($row);
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <body>
-    
 
 <table class="table table-striped-columns">
     <thead>
         <tr>
-            <th>ID</th>
+         
             <th>Student ID</th>
             <th>Student Name</th>
             <th>Email</th>
@@ -43,34 +39,27 @@ print_r($row);
     </thead>
 
     <tbody>
-    <?php if ($result->num_rows > 0): ?>
+    <?php foreach($result as $row):?>
 
-    <?php while($row = $result -> fetch_assoc()): 
-        
-        ?>  
 
     <tr>
-        <td><?php echo htmlspecialchars($row['student_name']) ?></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><?php echo $row["student_id"]?></td>
+        <td><?php echo $row["student_name"]?></td>
+        <td><?php echo $row["email"]?></td>
+        <td><?php echo $row["contact"]?></td>
+        <td><?php echo $row["gender"]?></td>
+        <td><?php echo $row["dob"]?></td>
+        <td><?php echo $row["fees"]?></td>
+        <td><?php echo $row["education"]?></td>
+        <td><?php echo $row["trainer"]?></td>
+        <td><?php echo $row["age"]?></td>
+        <td><?php echo $row["doj"]?></td>
     </tr>
-
-    <?php endwhile; ?>
-    <?php endif; ?>
+ 
+   <?php endforeach; ?>
     </tbody>
 </table>
 
 
 </body>
 </html>
-
-
