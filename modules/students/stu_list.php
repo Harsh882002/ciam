@@ -19,6 +19,7 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <body>
+<a href="add_student.php">ADD DATA</a>
 
 <table class="table table-striped-columns">
     <thead>
