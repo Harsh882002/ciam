@@ -24,6 +24,17 @@ if(isset($_GET['student_id']) && !empty($_GET['student_id'])) {
 else {
     echo "No student ID provided!";
 }
+
+
+//Update Data Code
+
+if(isset($_POST['submit'])){
+
+$student_id = isset($_POST['student_id']) ? $_POST['student_id'] : " ";
+$student_name = isset($_POST['student_name']) ? $_POST['student_name'] : "";
+$email = isset($_POST['email']) ? $_POST['email'] : "";
+
+}
 ?>
 
 
@@ -64,56 +75,56 @@ else {
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" required>
+                                    <input type="email" name="email" class="form-control" id="email" value="<?php echo $field['email'] ?>" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="contact" class="form-label">Contact</label>
-                                    <input type="tel" name="contact" class="form-control" id="contact" required>
+                                    <input type="tel" name="contact" class="form-control" id="contact" value="<?php echo $field['contact'] ?>" required>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="gender" class="form-label">Gender</label>
-                                    <select class="form-select" id="gender" name="gender" required>
+                                    <select class="form-select" id="gender" name="gender"  required>
                                         <option selected>Select your gender</option>
-                                        <option value="male">Male</option>
+                                        <option value="male"> Male</option>
                                         <option value="female">Female</option>
                                         <option value="other">Other</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="dob" class="form-label">Date of Birth</label>
-                                    <input type="date" name="dob" class="form-control" id="dob" required>
+                                    <input type="date" name="dob" class="form-control" id="dob"value="<?php echo $field['dob'] ?>" required>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="fees" class="form-label">Fees</label>
-                                    <input type="number" name="fees" class="form-control" id="fees" required>
+                                    <input type="number" name="fees" class="form-control" id="fees" value="<?php echo $field['fees'] ?>"  required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="education" class="form-label">Education</label>
-                                    <input type="text" name="education" class="form-control" id="education" required>
+                                    <input type="text" name="education" class="form-control" id="education" value="<?php echo $field['education'] ?>" required>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="trainer" class="form-label">Trainer</label>
-                                    <input type="text" name="trainer" class="form-control" id="trainer" required>
+                                    <input type="text" name="trainer" class="form-control" id="trainer" value="<?php echo $field['trainer'] ?>" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="age" class="form-label">Age</label>
-                                    <input type="number" name="age" class="form-control" id="age" required>
+                                    <input type="number" name="age" class="form-control" id="age" value="<?php echo $field['age'] ?>" required>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="doj" class="form-label">Date of Joining</label>
-                                    <input type="date" name="doj" class="form-control" id="doj" required>
+                                    <input type="date" name="doj" class="form-control" id="doj" value="<?php echo $field['doj'] ?>" required>
                                 </div>
                             </div>
 
