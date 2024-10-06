@@ -1,29 +1,29 @@
+
+
 <?php
 
 include ('../../database/database.php'); 
 
-if(isset($_GET['student_id']) && !empty($_GET['student_id'])){
+if(isset($_GET['student_id']) && !empty($_GET['student_id'])) {
 
     $student_id = intval($_GET['student_id']);
 
-    $sql = "SELECT * from student_info WHERE student_id = ? ";
-    $sql -> bindParam('i',$student_id);
-    $sql = $conn -> prepare($sql);
+    $stmt = "SELECT * from student_info WHERE student_id = ?";
+    $sql = $conn -> prepare($stmt);
+    $sql -> bindParam(1, $student_id, PDO::PARAM_INT);
 
-    $sql -> excecute();
+    $sql -> execute();
 
-    $result = $sql -> fetchAll(PDO:FETCH_ASSOC);
+    // Fetch only a single row
+    $field = $sql -> fetch(PDO::FETCH_ASSOC);
 
-    if($result -> num_rows === 1){
-        $field = $result -> FETCH_ASSOC();
-    }else{
-        echo " eroor ";
+    if(!$field) {
+        echo "Student not found!";
     }
 }
 
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,16 +45,16 @@ if(isset($_GET['student_id']) && !empty($_GET['student_id'])){
                         <h4>Student Information Form</h4>
                     </div>
                     <div class="card-body">
-                        <form action="add_student.php" method="POST">
+                        <form  method="GET">
  
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="student_id" class="form-label">Student ID</label>
-                                    <input type="text" name="student_id" class="form-control" id="student_id"  value="<?php  echo $field['student_id'] ?>" required>
+                                    <input type="text" name="student_id" class="form-control" id="student_id"  value="<?php echo isset($result['student_id']) ? $result['student_id']:""; ?>" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="name" class="form-label">student_name</label>
-                                    <input type="text" name="student_name" class="form-control" id="student_name" required>
+                                    <input type="text" name="student_name" class="form-control" id="student_name" value="<?php echo isset($result['student_name']) ? $result['student_name'] : ""; ?>" required>
                                 </div>
                             </div>
 
