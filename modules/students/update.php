@@ -1,7 +1,8 @@
 <?php
 include ('../../database/database.php'); 
 
-$student_id = 1 ;
+//Fetching Data from databse to html page 
+
 if(isset($_GET['student_id']) && !empty($_GET['student_id'])) {
     $student_id = intval($_GET['student_id']);
     
@@ -15,10 +16,13 @@ if(isset($_GET['student_id']) && !empty($_GET['student_id'])) {
     
     // Fetch only a single row
     $field = $sql -> fetch(PDO::FETCH_ASSOC);
-   print_r($field); 
+ 
     if(!$field) {
         echo "Student not found!";
     }
+}
+else {
+    echo "No student ID provided!";
 }
 ?>
 
