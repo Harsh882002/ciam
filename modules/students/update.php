@@ -1,28 +1,27 @@
-
-
 <?php
-
 include ('../../database/database.php'); 
 
+$student_id = 1 ;
 if(isset($_GET['student_id']) && !empty($_GET['student_id'])) {
-
     $student_id = intval($_GET['student_id']);
-
+    
+    // Prepare and execute the SQL statement
     $stmt = "SELECT * from student_info WHERE student_id = ?";
+   
     $sql = $conn -> prepare($stmt);
+    
     $sql -> bindParam(1, $student_id, PDO::PARAM_INT);
-
     $sql -> execute();
-
+    
     // Fetch only a single row
     $field = $sql -> fetch(PDO::FETCH_ASSOC);
-
+   print_r($field); 
     if(!$field) {
         echo "Student not found!";
     }
 }
-
 ?>
+
 
 
 <!DOCTYPE html>
@@ -45,16 +44,16 @@ if(isset($_GET['student_id']) && !empty($_GET['student_id'])) {
                         <h4>Student Information Form</h4>
                     </div>
                     <div class="card-body">
-                        <form  method="GET">
+                        <form  method="POST">
  
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="student_id" class="form-label">Student ID</label>
-                                    <input type="text" name="student_id" class="form-control" id="student_id"  value="<?php echo isset($result['student_id']) ? $result['student_id']:""; ?>" required>
+                                    <input type="text" name="student_id" class="form-control" id="student_id"  value="<?php echo isset($field['student_id']) ? $field['student_id']:""; ?>" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="name" class="form-label">student_name</label>
-                                    <input type="text" name="student_name" class="form-control" id="student_name" value="<?php echo isset($result['student_name']) ? $result['student_name'] : ""; ?>" required>
+                                    <input type="text" name="student_name" class="form-control" id="student_name" value="<?php echo isset($field['student_name']) ? $field['student_name'] : ""; ?>" required>
                                 </div>
                             </div>
 
