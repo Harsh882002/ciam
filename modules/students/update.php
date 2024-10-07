@@ -30,11 +30,32 @@ else {
 
 if(isset($_POST['submit'])){
 
-$student_id = isset($_POST['student_id']) ? $_POST['student_id'] : " ";
+$student_id = isset($_POST['student_id']) ? $_POST['student_id'] : "fff ";
 $student_name = isset($_POST['student_name']) ? $_POST['student_name'] : "";
 $email = isset($_POST['email']) ? $_POST['email'] : "";
+$contact = isset($_POST['contact']) ? $_POST['contact'] : "";
+$gender = isset($_POST['gender']) ? $_POST['gender'] : 'ww';
+$dob =  isset($_POST['dob'])? $_POST['dob']:'';
+$fees = isset($_POST['fees'])? $_POST['fees']:'';
+$education = isset($_POST['education'])? $_POST['education']:'';
+$trainer = isset($_POST['trainer'])? $_POST['trainer']:'';
+$age = isset($_POST['age'])? $_POST['age']:'';
+$doj = isset($_POST['doj'])? $_POST['doj']:'';
 
+
+$stmt = "UPDATE student_info  SET student_name= ?, email=?, contact = ?, gender=?, dob=?, fees= ?, education=?, trainer=?, age=?, doj=?  WHERE student_id = ? ";
+$sql =  $conn -> prepare($stmt);
+// var_dump($sql);
+$result = $sql -> execute([ $student_name,$email,$contact,$gender,$dob,$fees,$education,$trainer,$age ,$doj, $student_id]);
+
+if($result){
+    header('Location: stu_list.php'); // Correct header redirection
+    exit(); // Stop further script execution after redirection
+} else {
+    echo "Error updating record.";
 }
+}
+
 ?>
 
 
@@ -59,7 +80,7 @@ $email = isset($_POST['email']) ? $_POST['email'] : "";
                         <h4>Student Information Form</h4>
                     </div>
                     <div class="card-body">
-                        <form  method="POST">
+                        <form action="" method="POST">
  
                             <div class="row mb-3">
                                 <div class="col-md-6">
@@ -88,9 +109,9 @@ $email = isset($_POST['email']) ? $_POST['email'] : "";
                                     <label for="gender" class="form-label">Gender</label>
                                     <select class="form-select" id="gender" name="gender"  required>
                                         <option selected>Select your gender</option>
-                                        <option value="male"> Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="other">Other</option>
+                                        <option value="male" <?php echo isset($field['gender']) && $field['gende'] == 'male' ? 'selected' : "" ; ?>> Male</option>
+                                        <option value="female" <?php echo isset($field['gender']) && $field['gender'] == 'female' ? 'selected' : "" ?> >Female</option>
+                                        <option value="other" <?php  echo isset($field['gender']) && $field['gender']  == 'other'? 'selected': 'selected' ?>>Other</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
