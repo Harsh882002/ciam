@@ -43,6 +43,7 @@ $age = isset($_POST['age'])? $_POST['age']:'';
 $doj = isset($_POST['doj'])? $_POST['doj']:'';
 
 
+
 $stmt = "UPDATE student_info  SET student_name= ?, email=?, contact = ?, gender=?, dob=?, fees= ?, education=?, trainer=?, age=?, doj=?  WHERE student_id = ? ";
 $sql =  $conn -> prepare($stmt);
 // var_dump($sql);
