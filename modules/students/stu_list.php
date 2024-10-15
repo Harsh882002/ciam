@@ -2,6 +2,22 @@
 
 include ('../../database/database.php'); 
 
+//Delete a Data
+
+if(isset($_GET['student_id'])){
+    $student_id = $_GET['student_id'];
+
+$stmt = "DELETE from student_info WHERE student_id = ?";
+$sql =  $conn -> prepare($stmt);
+if($sql -> execute([$student_id])){
+    echo "daata Deleted successfully ";
+}else{
+    "Not sunmitted";
+}
+
+}
+// if(isset($_GET['student_id']))
+
 
 $sql = "SELECT * FROM student_info";
 $sql = $conn -> prepare($sql);
@@ -36,6 +52,7 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
             <th>Trainer</th>
             <th>Age</th>
             <th>Date_of_Joining</th>
+            <th>Action</th>
         </tr>
     </thead>
 
@@ -55,6 +72,11 @@ $result = $sql->fetchAll(PDO::FETCH_ASSOC);
         <td><?php echo $row["trainer"]?></td>
         <td><?php echo $row["age"]?></td>
         <td><?php echo $row["doj"]?></td>
+        <td>
+        <a href="update.php?student_id=<?php echo htmlspecialchars($row['student_id'] )?> " class="btn btn-primary" >Update</a> 
+            
+     <a href="stu_list.php?student_id=<?php echo htmlspecialchars($row['student_id'])?>" class="btn btn-danger">Delete</a>  
+        </td>
     </tr>
  
    <?php endforeach; ?>

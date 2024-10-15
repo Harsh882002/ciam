@@ -1,6 +1,7 @@
 <?php
 
-include_once '../../database/database.php'; 
+include('../../database/database.php'); 
+include ('error.php');
 
 if (isset($_POST['submit'])) {
     $student_id = isset($_POST['student_id']) ? $_POST['student_id'] : '';
@@ -17,8 +18,15 @@ if (isset($_POST['submit'])) {
 
 
     $sql = $conn->prepare("INSERT INTO student_info(student_id,student_name,email,contact,gender,dob,fees,education,trainer,age,doj) values (?,?,?,?,?,?,?,?,?,?,?)");
-    $sql->execute([$student_id, $student_name, $email, $contact, $gender,$dob,$fees,$education,$trainer,$age,$doj]);
+    
 
+    $result =  $sql->execute([$student_id, $student_name, $email, $contact, $gender,$dob,$fees,$education,$trainer,$age,$doj]);
+
+    if($result){
+        echo "Data Added Succefully ";
+    }else{
+        echo "NOT Added Successfully";
+    }
 }
 ?> 
 
@@ -37,7 +45,7 @@ if (isset($_POST['submit'])) {
             background-color: #f8f9fa; /* Light background for contrast */
         }
 
-        .card {
+        .card {sql
             width: 100%; /* Make the card 100% width */
         }
     </style>
@@ -48,7 +56,7 @@ if (isset($_POST['submit'])) {
         <div class="row justify-content-center">
             <div class="col-md-12"> <!-- Change to col-md-12 for full width -->
                 <div class="card shadow">
-                    <div class="card-header bg-primary text-white text-center">
+                    <div classqls="card-header bg-primary text-white text-center">
                         <h4>Student Information Form</h4>
                     </div>
                     <div class="card-body">
@@ -132,7 +140,6 @@ if (isset($_POST['submit'])) {
     </div>
 
     <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+ </body>
 
 </html>
