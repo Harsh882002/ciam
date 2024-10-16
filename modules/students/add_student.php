@@ -4,32 +4,41 @@ include('../../database/database.php');
 include ('error.php');
 
 if (isset($_POST['submit'])) {
-    $student_id = isset($_POST['student_id']) ? $_POST['student_id'] : '';
+    // Removed student_id from the POST array
     $student_name = isset($_POST['student_name']) ? $_POST['student_name'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $contact = isset($_POST['contact']) ? $_POST['contact'] : '';
     $gender = isset($_POST['gender']) ? $_POST['gender'] : '';
-    $dob =  isset($_POST['dob'])? $_POST['dob']:'';
-    $fees = isset($_POST['fees'])? $_POST['fees']:'';
-    $education = isset($_POST['education'])? $_POST['education']:'';
-    $trainer = isset($_POST['trainer'])? $_POST['trainer']:'';
-    $age = isset($_POST['age'])? $_POST['age']:'';
-    $doj = isset($_POST['doj'])? $_POST['doj']:'';
+    $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
+    $fees = isset($_POST['fees']) ? $_POST['fees'] : '';
+    $education = isset($_POST['education']) ? $_POST['education'] : '';
+    $trainer = isset($_POST['trainer']) ? $_POST['trainer'] : '';
+    $age = isset($_POST['age']) ? $_POST['age'] : '';
+    $doj = isset($_POST['doj']) ? $_POST['doj'] : '';
 
-
-    $sql = $conn->prepare("INSERT INTO student_info(student_id,student_name,email,contact,gender,dob,fees,education,trainer,age,doj) values (?,?,?,?,?,?,?,?,?,?,?)");
+    // Prepare SQL without student_id
+    $sql = $conn->prepare("INSERT INTO student_info(student_name, email, contact, gender, dob, fees, education, trainer, age, doj) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     
-
-    $result =  $sql->execute([$student_id, $student_name, $email, $contact, $gender,$dob,$fees,$education,$trainer,$age,$doj]);
+    // Execute the statement
+    $result = $sql->execute([$student_name, $email, $contact, $gender, $dob, $fees, $education, $trainer, $age, $doj]);
 
     if($result){
-        echo "Data Added Succefully ";
-    }else{
+        echo "Data Added Successfully ";
+    } else {
         echo "NOT Added Successfully";
     }
+
+
+    //check email validation
+    $check = "SELECT * FROM student_info  WHERE email = :email";
+    $sql1 =  $conn -> prepare($check);
+    $checking = $sql -> execute([$sql1]);
+    if($checking){
+        "email is duplicate ";
+    }
+
 }
 ?> 
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +54,7 @@ if (isset($_POST['submit'])) {
             background-color: #f8f9fa; /* Light background for contrast */
         }
 
-        .card {sql
+        .card {
             width: 100%; /* Make the card 100% width */
         }
     </style>
@@ -56,7 +65,7 @@ if (isset($_POST['submit'])) {
         <div class="row justify-content-center">
             <div class="col-md-12"> <!-- Change to col-md-12 for full width -->
                 <div class="card shadow">
-                    <div classqls="card-header bg-primary text-white text-center">
+                    <div class="card-header bg-primary text-white text-center">
                         <h4>Student Information Form</h4>
                     </div>
                     <div class="card-body">
@@ -64,27 +73,20 @@ if (isset($_POST['submit'])) {
  
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="student_id" class="form-label">Student ID</label>
-                                    <input type="text" name="student_id" class="form-control" id="student_id" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="name" class="form-label">student_name</label>
+                                    <label for="name" class="form-label">Student Name</label>
                                     <input type="text" name="student_name" class="form-control" id="student_name" required>
                                 </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" name="email" class="form-control" id="email" required>
                                 </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="contact" class="form-label">Contact</label>
                                     <input type="tel" name="contact" class="form-control" id="contact" required>
                                 </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="gender" class="form-label">Gender</label>
                                     <select class="form-select" id="gender" name="gender" required>
@@ -94,35 +96,35 @@ if (isset($_POST['submit'])) {
                                         <option value="other">Other</option>
                                     </select>
                                 </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="dob" class="form-label">Date of Birth</label>
                                     <input type="date" name="dob" class="form-control" id="dob" required>
                                 </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="fees" class="form-label">Fees</label>
                                     <input type="number" name="fees" class="form-control" id="fees" required>
                                 </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="education" class="form-label">Education</label>
                                     <input type="text" name="education" class="form-control" id="education" required>
                                 </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="trainer" class="form-label">Trainer</label>
                                     <input type="text" name="trainer" class="form-control" id="trainer" required>
                                 </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="age" class="form-label">Age</label>
                                     <input type="number" name="age" class="form-control" id="age" required>
                                 </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="doj" class="form-label">Date of Joining</label>
                                     <input type="date" name="doj" class="form-control" id="doj" required>
@@ -140,6 +142,6 @@ if (isset($_POST['submit'])) {
     </div>
 
     <!-- Bootstrap JS Bundle -->
- </body>
+</body>
 
 </html>
